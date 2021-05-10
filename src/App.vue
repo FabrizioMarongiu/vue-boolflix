@@ -53,7 +53,8 @@ export default {
     },
     searchMovie(nome) {
       this.search = nome;
-      console.log(nome);
+      console.log(this.search);
+      nome = "";
     },
   },
 };
