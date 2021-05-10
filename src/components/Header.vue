@@ -6,8 +6,12 @@
       class="transparent"
     />
     <form>
-      <button>Cerca</button>
-      <input type="text" placeholder="Ricerca film o serie" />
+      <button @click.prevent="$emit('sendRequest', nome)">Cerca</button>
+      <input
+        type="text"
+        placeholder="Ricerca film o serie"
+        v-model.trim="nome"
+      />
     </form>
   </header>
 </template>
@@ -15,6 +19,11 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      nome: "",
+    };
+  },
 };
 </script>
 
