@@ -1,6 +1,6 @@
 <template>
   <div class="cardMovie">
-    <h3>Titolo: {{ movies.title }}</h3>
+    <h3>{{ movies.title === undefined ? movies.title : movies.name }}</h3>
     <h3>Titolo Originale: {{ movies.original_title }}</h3>
     <!-- DIV CONTENENTE LA BANDIERA -->
 

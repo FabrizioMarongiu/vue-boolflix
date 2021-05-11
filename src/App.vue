@@ -20,8 +20,11 @@ export default {
   data() {
     return {
       api:
-        "https://api.themoviedb.org/3/search/movie?api_key=e12447a41ebd0cc2c67454fb0200dd04&query=avengers&language=it-IT",
+"https://api.themoviedb.org/3/search/movie?api_key=e12447a41ebd0cc2c67454fb0200dd04"
+      apiTv:
+        "https://api.themoviedb.org/3/search/tv?api_key=e99307154c6dfb0b4750f6603256716d&language=it-IT&query=scrubs",
       movieList: [],
+      tvList: [],
       search: "",
     };
   },
@@ -45,6 +48,15 @@ export default {
         .get(this.api)
         .then((res) => {
           this.movieList = res.data.results;
+          console.log(this.movieList);
+        })
+        .catch((error) => {
+          console.log(error, "Error");
+        });
+      axios
+        .get(this.apiTv)
+        .then((res) => {
+          this.movieList.push(res.data.results);
           console.log(this.movieList);
         })
         .catch((error) => {
