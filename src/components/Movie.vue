@@ -34,7 +34,7 @@
       <img
         v-if="movies.original_language === 'en'"
         src="@/assets/flags-boolflix/en.png"
-        alt=""
+        :alt="movies.original_language"
       />
       <span v-else>{{ movies.original_language }}</span>
     </div>
@@ -52,6 +52,12 @@
         :key="'A' + index"
       ></i>
     </div>
+    <div class="image">
+      <img
+        :src="`https://image.tmdb.org/t/p/w342/${movies.poster_path}`"
+        :alt="movies.title === undefined ? `${movies.name}` : `${movies.title}`"
+      />
+    </div>
   </div>
 </template>
 
@@ -67,7 +73,7 @@ export default {
 .cardMovie {
   margin: 20px;
 }
-img {
+.language img {
   width: 35px;
   margin: 0 5px;
 }
