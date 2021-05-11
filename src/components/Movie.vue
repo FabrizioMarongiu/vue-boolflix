@@ -1,7 +1,19 @@
 <template>
-  <div class="cardMovie">
-    <h3>{{ movies.title === undefined ? movies.title : movies.name }}</h3>
-    <h3>Titolo Originale: {{ movies.original_title }}</h3>
+  <div class="cardMovie" v-if="movies">
+    <h3>
+      {{
+        movies.title === undefined
+          ? `Titolo:  ${movies.name}`
+          : `Titolo: ${movies.title}`
+      }}
+    </h3>
+    <h3>
+      {{
+        movies.original_title === undefined
+          ? `Titolo:  ${movies.original_name}`
+          : `Titolo: ${movies.original_title}`
+      }}
+    </h3>
     <!-- DIV CONTENENTE LA BANDIERA -->
 
     <div class="language">
