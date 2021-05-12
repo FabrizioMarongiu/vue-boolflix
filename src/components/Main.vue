@@ -1,17 +1,33 @@
 <template>
   <main>
     <ul>
-      <div v-show="arrayMovies.length">
-        <span>Film</span>
-        <li v-for="element in arrayMovies" :key="element.id">
-          <Movie :movies="element" />
-        </li>
+      <div class="rowFilm" v-show="arrayMovies.length">
+        <h2>Film</h2>
+        <div class="d-flex">
+          <li v-for="element in arrayMovies" :key="element.id">
+            <Movie :movies="element" />
+          </li>
+        </div>
       </div>
-      <div v-show="arraySeries.length">
-        <span>Serie Tv</span>
-        <li v-for="element in arraySeries" :key="element.id">
-          <Movie :movies="element" />
-        </li>
+      <div class="rowSeries" v-show="arraySeries.length">
+        <h2>Serie Tv</h2>
+        <div class="d-flex">
+          <li v-for="element in arraySeries" :key="element.id">
+            <Movie :movies="element" />
+          </li>
+        </div>
+      </div>
+
+      <div
+        class="rowHome"
+        :class="{ active: !arrayMovies.length, active: !arraySeries.length }"
+      >
+        <h2>Film in teatro</h2>
+        <div class="d-flex">
+          <li v-for="element in arrayHome" :key="element.id">
+            <Movie :movies="element" />
+          </li>
+        </div>
       </div>
     </ul>
   </main>
@@ -28,6 +44,7 @@ export default {
   props: {
     arrayMovies: Array,
     arraySeries: Array,
+    arrayHome: Array,
   },
 
   methods: {},
@@ -35,10 +52,32 @@ export default {
 </script>
 
 <style scoped lang="scss">
-li {
-  margin: 20px;
+main {
+  flex-grow: 1;
+  background-color: #000000;
+  overflow-y: auto;
+  padding: 35px;
+}
+.rowFilm,
+.rowSeries,
+.rowHome {
+  overflow-x: auto;
+}
+h2 {
+  margin-left: 35px;
+  color: #fff;
+}
+.d-flex {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+}
+li {
+  list-style: none;
+  padding: 0;
+}
+.rowHome {
+  display: none;
+}
+.active {
+  display: inline;
 }
 </style>

@@ -1,8 +1,14 @@
 <template>
   <div in="App">
-    <Header @sendRequest="searchMovie" />
+    <section class="app">
+      <Header @sendRequest="searchMovie" />
 
-    <Main :arrayMovies="movieList" :arraySeries="tvList" />
+      <Main
+        :arrayMovies="movieList"
+        :arraySeries="tvList"
+        :arrayHome="homeList"
+      />
+    </section>
   </div>
 </template>
 
@@ -20,47 +26,45 @@ export default {
   data() {
     return {
       api: "https://api.themoviedb.org/3/search",
+      apiHome:
+        "https://api.themoviedb.org/3/discover/movie?primary_release_date.gte=2014-09-15&primary_release_date.lte=2014-10-22&api_key=e12447a41ebd0cc2c67454fb0200dd04",
+      homeList: [],
       movieList: [],
       tvList: [],
       apiKey: "e12447a41ebd0cc2c67454fb0200dd04",
     };
   },
   computed: {},
-  created() {},
+  created() {
+    this.getHome();
+  },
   methods: {
-    // getMovie() {
-    //   axios
-    //     .get(this.api + "/movie", {
-    //       params: {
-    //         api_key: this.apiKey,
-    //         query: this.search,
-    //         // CORREZIONE
-    //         language: "it-IT",
-    //       },
-    //     })
-    //     .then((res) => {
-    //       this.movieList = res.data.results;
-    //       console.log(this.movieList);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error, "Error");
-    //     });
-    //   axios
-    //     .get(this.api + "/tv", {
-    //       params: {
-    //         api_key: this.apiKey,
-    //         query: this.search,
-    //         language: "it-IT",
-    //       },
-    //     })
-    //     .then((res) => {
-    //       this.tvList = res.data.results;
-    //       console.log(this.tvList);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error, "Error");
-    //     });
-    // },
+    getHome() {
+      axios
+        .get(this.apiHome)
+        .then((res) => {
+          this.homeList = res.data.results;
+          console.log(this.homeList);
+        })
+        .catch((error) => {
+          console.log(error, "Error");
+        });
+      // axios
+      //   .get(this.api + "/tv", {
+      //     params: {
+      //       api_key: this.apiKey,
+      //       query: this.search,
+      //       language: "it-IT",
+      //     },
+      //   })
+      //   .then((res) => {
+      //     this.tvList = res.data.results;
+      //     console.log(this.tvList);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error, "Error");
+      //   });
+    },
     searchMovie(nome) {
       // this.search = nome.toLowerCase();
       axios
@@ -94,7 +98,7 @@ export default {
         .catch((error) => {
           console.log(error, "Error");
         });
-      nome = "";
+      // nome = "";
     },
   },
 };
@@ -106,7 +110,7 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-#app {
+.app {
   height: 100vh;
   display: flex;
   flex-direction: column;
