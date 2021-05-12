@@ -1,31 +1,26 @@
 <template>
   <div class="cardMovie" v-if="movies">
     <h3>
-      {{
-        movies.title === undefined
-          ? `Titolo:  ${movies.name}`
-          : `Titolo: ${movies.title}`
-      }}
+      {{ movies.title ? `Titolo: ${movies.title}` : `Titolo:  ${movies.name}` }}
     </h3>
-    <h3>
+    <h3
+      v-show="
+        movies.title != movies.original_title ||
+        movies.name != movies.original_name
+      "
+    >
+      <!-- <h3> -->
       {{
-        movies.original_title === undefined
-          ? `Titolo:  ${movies.original_name}`
-          : `Titolo: ${movies.original_title}`
+        movies.original_title
+          ? `Titolo originale: ${movies.original_title}`
+          : `Titolo originale:  ${movies.original_name}`
       }}
     </h3>
     <!-- DIV CONTENENTE LA BANDIERA -->
 
     <div class="language">
       <h3>Lingua:</h3>
-      <!-- <img
-        :src="
-            language.includes(movies.original_language)
-            ? '@/assets/flags-boolfix/{{movies.original_language}}.png'
-            : '{{movies.original_language}}'
-        "
-        alt=""
-        /> -->
+
       <img
         v-if="movies.original_language === 'it'"
         src="@/assets/flags-boolflix/it.png"

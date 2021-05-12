@@ -2,7 +2,7 @@
   <div in="App">
     <Header @sendRequest="searchMovie" />
 
-    <Main :array="filterArray" />
+    <Main :arrayMovies="movieList" :arraySeries="tvList" />
   </div>
 </template>
 
@@ -19,55 +19,57 @@ export default {
   },
   data() {
     return {
-      api: "https://api.themoviedb.org/3/search/movie",
-      apiTv: "https://api.themoviedb.org/3/search/tv",
+      api: "https://api.themoviedb.org/3/search",
       movieList: [],
       tvList: [],
-      search: "",
       apiKey: "e12447a41ebd0cc2c67454fb0200dd04",
-      newArray: [],
     };
   },
-  computed: {
-    filterArray() {
-      if (this.search === "") {
-        return this.movieList;
-      }
-      if (this.movieList.length != 0 && this.tvList.length != 0) {
-        this.newArray = [];
-        this.movieList.forEach((element) => {
-          this.newArray.push(element);
-        });
-        this.tvList.forEach((element) => {
-          this.newArray.push(element);
-        });
-        console.log(this.newArray);
-        return this.newArray;
-      }
-      if (this.movieList.length != 0) {
-        return this.movieList.filter((element) => {
-          return element.title
-            .toLowerCase()
-            .includes(this.search.toLowerCase());
-        });
-      }
-      if (this.tvList.length != 0) {
-        return this.tvList.filter((element) => {
-          return element.name.toLowerCase().includes(this.search.toLowerCase());
-        });
-      }
-    },
-  },
-  created() {
-    // this.getMovie();
-  },
+  computed: {},
+  created() {},
   methods: {
-    getMovie() {
+    // getMovie() {
+    //   axios
+    //     .get(this.api + "/movie", {
+    //       params: {
+    //         api_key: this.apiKey,
+    //         query: this.search,
+    //         // CORREZIONE
+    //         language: "it-IT",
+    //       },
+    //     })
+    //     .then((res) => {
+    //       this.movieList = res.data.results;
+    //       console.log(this.movieList);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error, "Error");
+    //     });
+    //   axios
+    //     .get(this.api + "/tv", {
+    //       params: {
+    //         api_key: this.apiKey,
+    //         query: this.search,
+    //         language: "it-IT",
+    //       },
+    //     })
+    //     .then((res) => {
+    //       this.tvList = res.data.results;
+    //       console.log(this.tvList);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error, "Error");
+    //     });
+    // },
+    searchMovie(nome) {
+      // this.search = nome.toLowerCase();
       axios
-        .get(this.api, {
+        .get(this.api + "/movie", {
           params: {
             api_key: this.apiKey,
-            query: this.search,
+            query: nome,
+            // CORREZIONE
+            language: "it-IT",
           },
         })
         .then((res) => {
@@ -78,10 +80,11 @@ export default {
           console.log(error, "Error");
         });
       axios
-        .get(this.apiTv, {
+        .get(this.api + "/tv", {
           params: {
             api_key: this.apiKey,
-            query: this.search,
+            query: nome,
+            language: "it-IT",
           },
         })
         .then((res) => {
@@ -91,12 +94,7 @@ export default {
         .catch((error) => {
           console.log(error, "Error");
         });
-    },
-    searchMovie(nome) {
-      this.search = nome.toLowerCase();
-      console.log(this.search);
-
-      this.getMovie();
+      nome = "";
     },
   },
 };

@@ -1,9 +1,18 @@
 <template>
   <main>
     <ul>
-      <li v-for="(element, index) in array" :key="index">
-        <Movie :movies="element" />
-      </li>
+      <div v-show="arrayMovies.length">
+        <span>Film</span>
+        <li v-for="element in arrayMovies" :key="element.id">
+          <Movie :movies="element" />
+        </li>
+      </div>
+      <div v-show="arraySeries.length">
+        <span>Serie Tv</span>
+        <li v-for="element in arraySeries" :key="element.id">
+          <Movie :movies="element" />
+        </li>
+      </div>
     </ul>
   </main>
 </template>
@@ -16,7 +25,10 @@ export default {
   components: {
     Movie,
   },
-  props: ["array"],
+  props: {
+    arrayMovies: Array,
+    arraySeries: Array,
+  },
 
   methods: {},
 };
@@ -25,5 +37,8 @@ export default {
 <style scoped lang="scss">
 li {
   margin: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 </style>
