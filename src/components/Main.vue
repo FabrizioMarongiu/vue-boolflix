@@ -1,4 +1,5 @@
 <template>
+  <!-- SEZIONE DEDICATA AL MAIN DOVE SI VUSUALIZZANO GLI ELENCHI DELLE RICERCHE EFFETTUATE -->
   <main>
     <ul>
       <div class="rowFilm" v-show="arrayMovies.length">
@@ -17,11 +18,8 @@
           </li>
         </div>
       </div>
-
-      <div
-        class="rowHome"
-        :class="{ active: !arrayMovies.length, active: !arraySeries.length }"
-      >
+      <!-- QUESTA SEZIONE SI POPOLA ALL'AVVIO DELL'APP E MOSTRA I FILM PRESENTI IN TEATRO  -->
+      <div class="rowHome" v-show="!arrayMovies.length && !arraySeries.length">
         <h2>Film in teatro</h2>
         <div class="d-flex">
           <li v-for="element in arrayHome" :key="element.id">
@@ -57,27 +55,22 @@ main {
   background-color: #000000;
   overflow-y: auto;
   padding: 35px;
-}
-.rowFilm,
-.rowSeries,
-.rowHome {
-  overflow-x: auto;
-}
-h2 {
-  margin-left: 35px;
-  color: #fff;
-}
-.d-flex {
-  display: flex;
-}
-li {
-  list-style: none;
-  padding: 0;
-}
-.rowHome {
-  display: none;
-}
-.active {
-  display: inline;
+  .rowFilm,
+  .rowSeries,
+  .rowHome {
+    overflow-x: auto;
+    height: 650px;
+  }
+  h2 {
+    margin-left: 35px;
+    color: #fff;
+  }
+  .d-flex {
+    display: flex;
+  }
+  li {
+    list-style: none;
+    padding: 0;
+  }
 }
 </style>

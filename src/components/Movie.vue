@@ -1,10 +1,20 @@
 <template>
+  <!-- SEZIONE DOVE SI VISUALIZZANO I FILM E LE SERIE TV -->
+  <!-- PRIMA PARTE DEDICATA ALL'IMMAGINE DI COPERTINA DEL FILM -->
   <div class="cardMovie" v-if="movies">
     <img
+      v-if="movies.poster_path"
       class="image"
       :src="`https://image.tmdb.org/t/p/w342/${movies.poster_path}`"
       :alt="movies.title === undefined ? `${movies.name}` : `${movies.title}`"
     />
+    <img
+      class="image"
+      v-else
+      src="https://www.altavod.com/assets/images/poster-placeholder.png"
+      :alt="movies.title === undefined ? `${movies.name}` : `${movies.title}`"
+    />
+    <!-- LA SECONDA PARTE è DEDIVATA ALLA DESCRIZIONE/TITOLO/VOTO E SI ATTIVA IN HOVER SULL'ELEMENTO -->
     <div class="back">
       <h3>
         {{
@@ -43,7 +53,12 @@
           src="@/assets/flags-boolflix/en.png"
           :alt="movies.original_language"
         />
-        <span v-else>{{ movies.original_language }}</span>
+        <span
+          v-show="
+            movies.original_language != 'it' && movies.original_language != 'en'
+          "
+          >{{ movies.original_language }}</span
+        >
       </div>
       <!-- DIV CONTENENTE I VOTI -->
       <div class="vote">
@@ -67,7 +82,11 @@
 export default {
   name: "Movie",
   props: ["movies"],
-  language: ["it", "en"],
+  data() {
+    return {
+      language: ["it", "en"],
+    };
+  },
 };
 </script>
 
@@ -82,62 +101,57 @@ export default {
   cursor: pointer;
   overflow: hidden;
   transition: 2s;
+  .language img {
+    width: 35px;
+    margin: 0 5px;
+  }
+  .language,
+  .vote {
+    display: flex;
+  }
+  .overview h3 {
+    display: inline;
+  }
+  .overview span {
+    font-size: 12px;
+  }
+  .yellow {
+    color: yellow;
+  }
+  .back {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.43);
+    opacity: 0;
+    transition: 0.5s;
+    padding: 20px;
+    text-align: left;
+  }
+  &:hover {
+    box-shadow: 1px 0px 10px rgba(168, 163, 163, 0.786);
+    transform: scale(1.1);
+    .back {
+      opacity: 2;
+    }
+  }
+  .image {
+    width: 100%;
+    height: 100%;
+    filter: brightness(80%);
+  }
 }
-.cardMovie .language img {
-  width: 35px;
-  margin: 0 5px;
-}
-.language,
-.vote {
-  display: flex;
-}
-.overview h3 {
-  display: inline;
-}
-.overview span {
-  font-size: 12px;
-}
-.yellow {
-  color: yellow;
-}
-.back {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.43);
-  opacity: 0;
-  transition: 0.5s;
-  padding: 20px;
-  text-align: left;
-}
+
 /**
 TO FIXED
  */
 // .cardMovie:hover ~ .cardMovie {
 //   transform: translateX(25%);
 // }
-.cardMovie:hover {
-  box-shadow: 1px 0px 10px rgba(168, 163, 163, 0.786);
-  transform: scale(1.1);
-  .back {
-    opacity: 2;
-  }
-}
-.image {
-  // position: relative;
-  // height: 513px;
-  // width: 342px;
-  // cursor: pointer;
-}
-.image img {
-  width: 100%;
-  height: 100%;
-  filter: brightness(50%);
-}
 </style>

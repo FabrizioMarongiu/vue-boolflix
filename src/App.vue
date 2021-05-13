@@ -1,8 +1,10 @@
 <template>
+  <!-- SEZIONE PRINCIPALE DELL'APP (PADRE) -->
   <div in="App">
     <section class="app">
+      <!-- RICHIAMO DEL TEMPLATE HEADER -->
       <Header @sendRequest="searchMovie" />
-
+      <!-- RICHIAMO DEL TEMPLATE MAIN -->
       <Main
         :arrayMovies="movieList"
         :arraySeries="tvList"
@@ -39,6 +41,7 @@ export default {
     this.getHome();
   },
   methods: {
+    // QUESTA FUNZIONE IN COMPUTED PERMETTE DI VISUALIZZARE ALL'AVVIO DELL'APP I FILM TRASMESSI IN TEATRO
     getHome() {
       axios
         .get(this.apiHome)
@@ -49,30 +52,14 @@ export default {
         .catch((error) => {
           console.log(error, "Error");
         });
-      // axios
-      //   .get(this.api + "/tv", {
-      //     params: {
-      //       api_key: this.apiKey,
-      //       query: this.search,
-      //       language: "it-IT",
-      //     },
-      //   })
-      //   .then((res) => {
-      //     this.tvList = res.data.results;
-      //     console.log(this.tvList);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error, "Error");
-      //   });
     },
+    // FUNZIONE CHE PERMETTE DI RICERCARE FILM O SERIE TV TRAMITE IL PARAMETRO "NOME", FACENDO UNA CHIAMATA API
     searchMovie(nome) {
-      // this.search = nome.toLowerCase();
       axios
         .get(this.api + "/movie", {
           params: {
             api_key: this.apiKey,
             query: nome,
-            // CORREZIONE
             language: "it-IT",
           },
         })
@@ -98,7 +85,6 @@ export default {
         .catch((error) => {
           console.log(error, "Error");
         });
-      // nome = "";
     },
   },
 };
